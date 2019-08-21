@@ -10,11 +10,17 @@ def read_file():
 
 soup = BeautifulSoup(read_file(),'lxml')
 
-add_divs = soup.find_all('div',attrs={'class':'crux-body-copy'}) 
+# add_divs = soup.find_all('div',attrs={'class':'crux-body-copy'}) 
 
 # for div in add_divs:
 #      print(div.a.string)
 
-products = [div.a.string for div in add_divs]
-for product in products:
-    print(product)
+product_names = [div.a.string for div in soup.find_all('div', class_ ='crux-body-copy')]
+product_links = [div.a['href'] for div in soup.find_all('div', class_ ='crux-body-copy')]
+
+products = {div.a.string:div.a['href'] for div in soup.find_all('div',class_='crux-body-copy')}
+# for product in products:
+#     print(product)
+
+for key, value in products.items():
+    print(key,' -->',value)
